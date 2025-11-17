@@ -1,0 +1,5 @@
+<?php 
+Enum WagonTypeEnum: string
+{
+  
+}

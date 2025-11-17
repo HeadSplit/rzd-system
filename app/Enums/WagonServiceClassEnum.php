@@ -1,0 +1,6 @@
+<?php 
+
+Enum WagonServiceClassEnum: string
+{
+
+}
