@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('login');
             $table->string('password');
-            $table->unsignedBigInteger('group_id')->nullable();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');   
             $table->timestamps();
         });
     }
