@@ -11,9 +11,13 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libssl-dev \
     pkg-config \
-    gd \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
     bash \
-    && docker-php-ext-install pdo pdo_pgsql zip
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_pgsql zip gd
+
 
 RUN pecl install redis && docker-php-ext-enable redis
 RUN pecl install mongodb && docker-php-ext-enable mongodb

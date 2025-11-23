@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Jobs;
+
+use App\Services\ExcelFioImporterService;
+use App\Services\UserGeneratorService;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+
+class ImportFioJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct(public string $path)
+    {
+        //
+    }
+
+    /**
+     * Execute the job.
+     */
+    public function handle(
+        ExcelFioImporterService $importer,
+        UserGeneratorService $generator
+    ): void
+    {
+        $processedPath = 'xlsx/processed/' . basename($this->path);
+
+        $fullPath = storage_path('app/' . $this->path);
+        $fios = $importer->parse($fullPath);
+
+        if (empty($fios)) {
+            echo "Файл {$this->path} пустой или колонка выбрана неверно\n";
+            Log::warning("Файл {$this->path} пустой или колонка выбрана неверно");
+        } else {
+            echo "ФИО из файла {$this->path}:\n";
+            foreach ($fios as $i => $fio) {
+                echo ($i + 1) . ". $fio\n";
+                Log::info("ФИО: $fio");
+            }
+        }
+
+        foreach ($fios as $fio) {
+            $generator->createFromFio($fio);
+        }
+
+        Storage::move($this->path, $processedPath);
+    }
+}
