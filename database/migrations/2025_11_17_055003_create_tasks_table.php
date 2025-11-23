@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('description');
-            $table->jsonb('user_answers');
+            $table->jsonb('user_answers')->nullable();
             $table->jsonb('correct_answers');
-            $table->boolean('is_answers_correct');
+            $table->boolean('is_answers_correct')->nullable();
             $table->timestamps();
         });
     }
