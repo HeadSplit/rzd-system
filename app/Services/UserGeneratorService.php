@@ -12,8 +12,6 @@ class UserGeneratorService
         $login = $this->makeLogin($fio);
         $password = Str::random(10);
 
-
-
         return User::create([
             'fullname' => $fio,
             'login' => $login,
