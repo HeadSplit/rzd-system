@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class ImportFioJob implements ShouldQueue
+class   ImportFioJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,9 +32,17 @@ class ImportFioJob implements ShouldQueue
         UserGeneratorService $generator
     ): void
     {
-        $processedPath = 'xlsx/processed/' . basename($this->path);
+
+        $fileName = basename($this->path);
+        $groupName = pathinfo($fileName, PATHINFO_FILENAME);
+
+       $group = $importer->createGroup($groupName, $fileName);
+
+        $processedPath = 'xlsx/processed/' . $fileName;
 
         $fullPath = storage_path('app/' . $this->path);
+
+
         $fios = $importer->parse($fullPath);
 
         if (empty($fios)) {
@@ -49,7 +57,7 @@ class ImportFioJob implements ShouldQueue
         }
 
         foreach ($fios as $fio) {
-            $generator->createFromFio($fio);
+            $generator->createFromFio($fio, $group->id);
         }
 
         Storage::move($this->path, $processedPath);

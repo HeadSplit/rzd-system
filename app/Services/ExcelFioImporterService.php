@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Group;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ExcelFioImporterService
@@ -31,5 +32,13 @@ class ExcelFioImporterService
         }
 
         return $fios;
+    }
+
+    public function createGroup(string $groupName, string $fileName): Group
+    {
+        return Group::create([
+            'name' => $groupName,
+            'filename' => $fileName,
+        ]);
     }
 }

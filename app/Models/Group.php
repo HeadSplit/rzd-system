@@ -11,7 +11,8 @@ class Group extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'filename',
     ];
 
     protected $casts = [

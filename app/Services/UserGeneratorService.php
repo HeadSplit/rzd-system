@@ -7,31 +7,44 @@ use Illuminate\Support\Str;
 
 class UserGeneratorService
 {
-    public function createFromFio(string $fio): User
+    public function createFromFio(string $fio, int $groupId): array
     {
-        $login = $this->makeLogin($fio);
+        $login = $this->generateUniqueLogin($fio);
         $password = Str::random(10);
 
-        return User::create([
+        $user = User::create([
             'fullname' => $fio,
             'login' => $login,
             'password' => bcrypt($password),
-            'group_id' => 1,
+            'group_id' => $groupId,
         ]);
+
+        return [
+            'user' => $user,
+            'password' => $password
+        ];
     }
 
-    private function makeLogin(string $fio): string
+    private function generateUniqueLogin(string $fio): string
     {
         $parts = explode(' ', $fio);
 
-        if (count($parts) < 3) {
-            return Str::slug($fio) . rand(100, 999);
+        if (count($parts) >= 3) {
+            [$last, $first, $middle] = $parts;
+            $base = Str::lower(Str::slug($first[0] . $middle[0] . $last));
+        } else {
+            $base = Str::lower(Str::slug($fio));
         }
 
-        [$last, $first, $middle] = $parts;
+        $login = $base;
+        $i = 1;
 
-        return Str::lower(
-            Str::slug($first[0] . $middle[0] . $last)
-        );
+        while (User::where('login', $login)->exists()) {
+            $login = $base . $i;
+            $i++;
+        }
+
+        return $login;
     }
 }
+
