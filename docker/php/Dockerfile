@@ -33,7 +33,8 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 RUN composer require mongodb/laravel-mongodb:^5.5 -W
-RUN composer require phpoffice/phpspreadsheet
+RUN composer require phpoffice/phpspreadsheet && composer require barryvdh/laravel-dompdf
+
 
 LABEL authors="HeadSplit"
 

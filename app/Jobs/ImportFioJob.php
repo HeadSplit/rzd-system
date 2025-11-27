@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Services\ExcelFioImporterService;
 use App\Services\UserGeneratorService;
+use App\Services\UserPdfService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -29,14 +30,13 @@ class   ImportFioJob implements ShouldQueue
      */
     public function handle(
         ExcelFioImporterService $importer,
-        UserGeneratorService $generator
+        UserGeneratorService $generator,
     ): void
     {
-
         $fileName = basename($this->path);
         $groupName = pathinfo($fileName, PATHINFO_FILENAME);
 
-       $group = $importer->createGroup($groupName, $fileName);
+       $group = $generator->createGroup($groupName, $fileName);
 
         $processedPath = 'xlsx/processed/' . $fileName;
 
@@ -57,7 +57,13 @@ class   ImportFioJob implements ShouldQueue
         }
 
         foreach ($fios as $fio) {
-            $generator->createFromFio($fio, $group->id);
+            $result = $generator->createFromFio($fio, $group->id);
+            if ($result) $createdUsers[] = $result;
+        }
+
+        if(!empty($createdUsers)) {
+            $pdfPath = $generator->generatePdf($createdUsers, $groupName . '.pdf');
+            Log::info("Pdf $groupName сформирован");
         }
 
         Storage::move($this->path, $processedPath);
