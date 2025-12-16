@@ -4,14 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use MongoDB\Laravel\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Wagon extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'features' => 'array',
+    ];
     public function seats(): HasMany
     {
         return $this->hasMany(Seat::class);
+    }
+
+    public function wagonprice(): HasOne
+    {
+       return $this->hasOne(WagonPrice::class);
     }
 }

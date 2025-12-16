@@ -1,0 +1,308 @@
+<?php
+
+namespace App\Services;
+
+use App\Enums\WagonServiceClassEnum;
+
+class WagonFeaturesService
+{
+    private array $featuresMap = [
+        WagonServiceClassEnum::basic->value => [
+            'name' => 'Базовый',
+            'description' => 'Стандартный вагон с минимальным набором услуг',
+            'features' => [
+                'wifi' => false,
+                'toilet' => true,
+                'air_conditioning' => false,
+                'power_outlets' => false,
+                'usb_ports' => false,
+                'bedding' => true,
+                'individual_lighting' => true,
+                'folding_table' => true,
+                'hot_water' => true,
+                'luggage_space' => true,
+                'window_blinds' => true,
+                'mirror' => false,
+                'wardrobe' => false,
+            ],
+            'services' => [
+                'meal_service' => false,
+                'free_water' => true,
+                'towels' => false,
+                'hygiene_kit' => false,
+            ],
+            'capacity' => 54,
+            'berths_per_compartment' => 6,
+            'has_private_compartment' => false,
+        ],
+        WagonServiceClassEnum::normal->value => [
+            'name' => 'Стандартный',
+            'description' => 'Обычный вагон с базовым комфортом',
+            'features' => [
+                'wifi' => false,
+                'toilet' => true,
+                'air_conditioning' => true,
+                'power_outlets' => true,
+                'usb_ports' => false,
+                'bedding' => true,
+                'individual_lighting' => true,
+                'folding_table' => true,
+                'hot_water' => true,
+                'luggage_space' => true,
+                'window_blinds' => true,
+                'mirror' => true,
+                'wardrobe' => false,
+                'shoe_rack' => true,
+            ],
+            'services' => [
+                'meal_service' => true,
+                'free_water' => true,
+                'towels' => true,
+                'hygiene_kit' => false,
+                'newspapers' => true,
+            ],
+            'capacity' => 36,
+            'berths_per_compartment' => 4,
+            'has_private_compartment' => true,
+        ],
+        WagonServiceClassEnum::business->value => [
+            'name' => 'Бизнес',
+            'description' => 'Вагон бизнес-класса с расширенным сервисом',
+            'features' => [
+                'wifi' => true,
+                'toilet' => true,
+                'air_conditioning' => true,
+                'power_outlets' => true,
+                'usb_ports' => true,
+                'bedding' => true,
+                'individual_lighting' => true,
+                'folding_table' => true,
+                'hot_water' => true,
+                'luggage_space' => true,
+                'window_blinds' => true,
+                'mirror' => true,
+                'wardrobe' => true,
+                'shoe_rack' => true,
+                'individual_ventilation' => true,
+                'reading_light' => true,
+            ],
+            'services' => [
+                'meal_service' => true,
+                'free_water' => true,
+                'towels' => true,
+                'hygiene_kit' => true,
+                'newspapers' => true,
+                'magazines' => true,
+                'welcome_drink' => true,
+                'slippers' => true,
+            ],
+            'capacity' => 20,
+            'berths_per_compartment' => 2,
+            'has_private_compartment' => true,
+        ],
+        WagonServiceClassEnum::firstClass->value => [
+            'name' => 'Первый класс',
+            'description' => 'Вагон первого класса с повышенным комфортом',
+            'features' => [
+                'wifi' => true,
+                'toilet' => true,
+                'air_conditioning' => true,
+                'power_outlets' => true,
+                'usb_ports' => true,
+                'tv' => true,
+                'bedding' => true,
+                'individual_lighting' => true,
+                'folding_table' => true,
+                'hot_water' => true,
+                'luggage_space' => true,
+                'window_blinds' => true,
+                'mirror' => true,
+                'wardrobe' => true,
+                'shoe_rack' => true,
+                'individual_ventilation' => true,
+                'reading_light' => true,
+                'safe' => true,
+            ],
+            'services' => [
+                'meal_service' => true,
+                'free_water' => true,
+                'towels' => true,
+                'hygiene_kit' => true,
+                'newspapers' => true,
+                'magazines' => true,
+                'welcome_drink' => true,
+                'slippers' => true,
+                'breakfast_included' => true,
+                'minibar' => true,
+            ],
+            'capacity' => 18,
+            'berths_per_compartment' => 2,
+            'has_private_compartment' => true,
+        ],
+        WagonServiceClassEnum::suite->value => [
+            'name' => 'Люкс',
+            'description' => 'Люксовый вагон с максимальным комфортом',
+            'features' => [
+                'wifi' => true,
+                'toilet' => true,
+                'air_conditioning' => true,
+                'power_outlets' => true,
+                'usb_ports' => true,
+                'tv' => true,
+                'bedding' => true,
+                'individual_lighting' => true,
+                'folding_table' => true,
+                'hot_water' => true,
+                'luggage_space' => true,
+                'window_blinds' => true,
+                'mirror' => true,
+                'wardrobe' => true,
+                'shoe_rack' => true,
+                'individual_ventilation' => true,
+                'reading_light' => true,
+                'safe' => true,
+                'shower' => true,
+                'minibar' => true,
+                'disability_access' => true,
+            ],
+            'services' => [
+                'meal_service' => true,
+                'free_water' => true,
+                'towels' => true,
+                'hygiene_kit' => true,
+                'newspapers' => true,
+                'magazines' => true,
+                'welcome_drink' => true,
+                'slippers' => true,
+                'breakfast_included' => true,
+                'lunch_included' => true,
+                'dinner_included' => true,
+                'free_drinks' => true,
+                'personal_concierge' => true,
+            ],
+            'capacity' => 8,
+            'berths_per_compartment' => 1,
+            'has_private_compartment' => true,
+        ],
+        WagonServiceClassEnum::premium->value => [
+            'name' => 'Премиум',
+            'description' => 'Эксклюзивный вагон премиум-класса',
+            'features' => [
+                'wifi' => true,
+                'toilet' => true,
+                'air_conditioning' => true,
+                'power_outlets' => true,
+                'usb_ports' => true,
+                'tv' => true,
+                'bedding' => true,
+                'individual_lighting' => true,
+                'folding_table' => true,
+                'hot_water' => true,
+                'luggage_space' => true,
+                'window_blinds' => true,
+                'mirror' => true,
+                'wardrobe' => true,
+                'shoe_rack' => true,
+                'individual_ventilation' => true,
+                'reading_light' => true,
+                'safe' => true,
+                'shower' => true,
+                'minibar' => true,
+                'disability_access' => true,
+                'private_bathroom' => true,
+                'jacuzzi' => false,
+                'workstation' => true,
+            ],
+            'services' => [
+                'meal_service' => true,
+                'free_water' => true,
+                'towels' => true,
+                'hygiene_kit' => true,
+                'newspapers' => true,
+                'magazines' => true,
+                'welcome_drink' => true,
+                'slippers' => true,
+                'breakfast_included' => true,
+                'lunch_included' => true,
+                'dinner_included' => true,
+                'free_drinks' => true,
+                'personal_concierge' => true,
+                'butler_service' => true,
+                'spa_access' => false,
+                'business_lounge_access' => true,
+            ],
+            'capacity' => 4,
+            'berths_per_compartment' => 1,
+            'has_private_compartment' => true,
+        ],
+        WagonServiceClassEnum::meetingRoom->value => [
+            'name' => 'Переговорная',
+            'description' => 'Вагон-переговорная для деловых встреч',
+            'features' => [
+                'wifi' => true,
+                'toilet' => true,
+                'air_conditioning' => true,
+                'power_outlets' => true,
+                'usb_ports' => true,
+                'tv' => true,
+                'conference_table' => true,
+                'whiteboard' => true,
+                'projector' => true,
+                'video_conference' => true,
+                'sound_system' => true,
+                'coffee_machine' => true,
+                'fridge' => true,
+                'disability_access' => true,
+            ],
+            'services' => [
+                'meal_service' => true,
+                'free_water' => true,
+                'coffee_tea_service' => true,
+                'secretarial_services' => true,
+                'printing_services' => true,
+                'translation_services' => false,
+            ],
+            'capacity' => 12,
+            'berths_per_compartment' => 0,
+            'has_private_compartment' => true,
+            'is_meeting_room' => true,
+        ],
+    ];
+
+    public function getWagonData(WagonServiceClassEnum $class): array
+    {
+        $data = $this->featuresMap[$class->value] ?? $this->featuresMap[WagonServiceClassEnum::basic->value];
+
+        return [
+            'class' => $class->value,
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'features' => $data['features'],
+            'services' => $data['services'],
+            'capacity' => $data['capacity'],
+            'berths_per_compartment' => $data['berths_per_compartment'],
+            'has_private_compartment' => $data['has_private_compartment'],
+            'is_meeting_room' => $data['is_meeting_room'] ?? false,
+        ];
+    }
+
+    public function getFeatures(WagonServiceClassEnum $class): array
+    {
+        return $this->featuresMap[$class->value]['features'] ?? $this->featuresMap[WagonServiceClassEnum::basic->value]['features'];
+    }
+
+    public function getServices(WagonServiceClassEnum $class): array
+    {
+        return $this->featuresMap[$class->value]['services'] ?? $this->featuresMap[WagonServiceClassEnum::basic->value]['services'];
+    }
+
+    public function getName(WagonServiceClassEnum $class): string
+    {
+        return $this->featuresMap[$class->value]['name'] ?? 'Базовый';
+    }
+
+    public function getDescription(WagonServiceClassEnum $class): string
+    {
+        return $this->featuresMap[$class->value]['description'] ?? 'Стандартный вагон';
+    }
+}

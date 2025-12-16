@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('trains', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('start_stantion_id')->nullable()->constrained('stantions')->onDelete('cascade');
-            $table->foreignId('end_stantion_id')->nullable()->constrained('stantions')->onDelete('cascade');
+            $table->foreignId('start_stantion_id')->nullable()->constrained('stations')->onDelete('cascade');
+            $table->foreignId('end_stantion_id')->nullable()->constrained('stations')->onDelete('cascade');
             $table->datetime('departure_time');
             $table->datetime('arrival_time');
             $table->timestamps();
