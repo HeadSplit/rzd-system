@@ -1,0 +1,27 @@
+.rzd-input {
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.rzd-input:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 1px #dc2626;
+}
+
+.counter-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 9999px;
+    border: 1px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.counter-btn:hover {
+    background: #f3f4f6;
+}

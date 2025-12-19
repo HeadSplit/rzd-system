@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Xlsx\XlsxController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Public\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/', [PageController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::post('/login', AuthController::class)->name('login');
 });
-Route::get('/xls/show/{filename}', [XlsxController::class, 'show'])->name('xls.show');
+
