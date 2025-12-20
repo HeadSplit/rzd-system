@@ -105,12 +105,25 @@
                 span.textContent = value;
                 let total = 0;
                 document.querySelectorAll('#passengersDropdown span.w-6').forEach(s => total+=parseInt(s.textContent));
-                passengersLabel.textContent = total + (total===1?' пассажир':' пассажира');
+                passengersLabel.textContent = total + (total===1?' пассажир':' пассажиров');
             });
         });
 
         flatpickr("#dateFrom", {dateFormat:"d.m.Y", minDate:"today", locale:"ru", onChange:(sd,dStr)=>{dateTo.set('minDate',dStr||"today");}});
         const dateTo = flatpickr("#dateTo", {dateFormat:"d.m.Y", minDate:"today", locale:"ru"});
+
+        flatpickr("#dateFrom", {
+            dateFormat: "d.m.Y",
+            minDate: "today",
+            locale: "ru",
+            onChange: function(selectedDates) {
+                if (selectedDates.length > 0) {
+                    dateTo.set('minDate', selectedDates[0]);
+                } else {
+                    dateTo.set('minDate', "today");
+                }
+            }
+        });
     </script>
 
 @endsection

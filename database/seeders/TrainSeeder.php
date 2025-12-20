@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Station;
 use App\Models\Train;
 use App\Models\Wagon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,8 +15,21 @@ class TrainSeeder extends Seeder
      */
     public function run(): void
     {
-        Train::factory()
-            ->count(30)
-            ->create();
+        $stations = Station::all()->pluck('id')->toArray();
+        shuffle($stations);
+
+        for ($i = 0; $i < count($stations) - 1; $i++) {
+            Train::create([
+                'name' => 'Поезд ' . ($i + 1),
+                'start_station_id' => $stations[$i],
+                'end_station_id' => $stations[$i + 1],
+            ]);
+        }
+
+        Train::create([
+            'name' => 'Поезд ' . count($stations),
+            'start_station_id' => $stations[count($stations) - 1],
+            'end_station_id' => $stations[0],
+        ]);
     }
 }
