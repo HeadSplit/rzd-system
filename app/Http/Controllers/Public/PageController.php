@@ -7,6 +7,7 @@ use App\Models\Route;
 use App\Models\Station;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class PageController extends Controller
@@ -24,24 +25,32 @@ class PageController extends Controller
         $to = $request->get('to_station');
         $dateFrom = $request->get('date_from');
 
-        $date = $dateFrom ? Carbon::createFromFormat('d.m.Y', $dateFrom)->format('Y-m-d') : null;
+        $date = $dateFrom
+            ? Carbon::createFromFormat('d.m.Y', $dateFrom)->toDateString()
+            : null;
 
         $routes = Route::query()
-            ->when($from, fn($q) =>
-            $q->whereHas('stations', fn($q) =>
-            $q->where('route_stations.station_id', $from)
-                ->when($date, fn($q) => $q->whereDate('route_stations.departure_time', $date))
-            )
-            )
-            ->when($to, fn($q) =>
-            $q->whereHas('stations', fn($q) =>
-            $q->where('route_stations.station_id', $to)
-            )
-            )
-            ->with(['stations' => fn($q) => $q->orderBy('pivot_order')])
+            ->when($from && $to, function ($q) use ($from, $to, $date) {
+
+                $q->whereExists(function ($sub) use ($from, $to, $date) {
+
+                    $sub->select(DB::raw(1))
+                        ->from('route_stations as rs_from')
+                        ->join('route_stations as rs_to', function ($join) use ($to) {
+                            $join->on('rs_from.route_id', '=', 'rs_to.route_id')
+                                ->where('rs_to.station_id', $to);
+                        })
+                        ->whereColumn('rs_from.route_id', 'routes.id')
+                        ->where('rs_from.station_id', $from)
+                        ->whereColumn('rs_from.order', '<', 'rs_to.order')
+                        ->when($date, fn ($q) =>
+                        $q->whereDate('rs_from.departure_time', $date)
+                        );
+                });
+            })
+            ->with(['stations' => fn ($q) => $q->orderBy('route_stations.order')])
             ->get();
 
         return view('pages.search', compact('routes', 'from', 'to', 'dateFrom'));
-
     }
 }

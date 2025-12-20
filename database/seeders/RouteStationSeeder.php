@@ -3,51 +3,62 @@
 namespace Database\Seeders;
 
 use App\Models\Route;
-use App\Models\RouteStation;
 use App\Models\Station;
 use App\Models\Train;
-use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RouteStationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Train::all()->each(function ($train) {
-            $name = Station::find($train->start_station_id)->name
-                . ' — ' . Station::find($train->end_station_id)->name;
+        $stations = Station::pluck('id')->shuffle()->values();
 
-            $route = Route::create([
-                'train_id' => $train->id,
-                'name' => $name
-            ]);
+        DB::transaction(function () use ($stations) {
 
-            $stations = [
-                $train->start_station_id,
-                $train->end_station_id
-            ];
+            Train::all()->each(function ($train) use ($stations) {
 
-            $currentDateTime = Carbon::now()->addDays(rand(0, 14))->setTime(rand(6, 22), rand(0, 59));
+                $routesCount = rand(3, 6);
 
-            foreach ($stations as $index => $stationId) {
-                $travelHours = rand(1, 3);
-                $arrival = $currentDateTime;
-                $departure = (clone $arrival)->addMinutes(rand(5, 15));
+                $totalStations = rand(15, 30);
+                $path = $stations->take($totalStations)->values();
 
-                RouteStation::create([
-                    'route_id' => $route->id,
-                    'station_id' => $stationId,
-                    'order' => $index + 1,
-                    'arrival_time' => $arrival->format('Y-m-d H:i:s'),
-                    'departure_time' => $departure->format('Y-m-d H:i:s')
-                ]);
+                $chunks = $path->chunk(5)->values();
 
-                $currentDateTime = (clone $departure)->addHours($travelHours);
-            }
+                $time = now()->startOfDay()->addHours(rand(0, 6));
+
+                foreach ($chunks as $index => $chunk) {
+
+                    if ($index > 0) {
+                        $chunk->prepend($chunks[$index - 1]->last());
+                    }
+
+                    $route = Route::create([
+                        'train_id' => $train->id,
+                        'name' => 'Маршрут ' . ($index + 1),
+                    ]);
+
+                    $rows = [];
+
+                    foreach ($chunk->values() as $order => $stationId) {
+
+                        $arrival = $time->copy();
+                        $departure = $arrival->copy()->addMinutes(rand(60, 300));
+
+                        $rows[] = [
+                            'route_id' => $route->id,
+                            'station_id' => $stationId,
+                            'order' => $order + 1,
+                            'arrival_time' => $arrival,
+                            'departure_time' => $departure,
+                        ];
+
+                        $time->addMinutes(rand(20, 60));
+                    }
+
+                    DB::table('route_stations')->insert($rows);
+                }
+            });
         });
     }
 }

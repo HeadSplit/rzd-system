@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Route extends Model
 {
-    use HasFactory;
-
     public function train(): BelongsTo
     {
         return $this->belongsTo(Train::class);

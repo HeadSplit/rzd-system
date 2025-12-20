@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enums\WagonTypeEnum;
 use App\Models\Seat;
+use App\Models\Train;
 use App\Models\Wagon;
 use App\Models\WagonPrice;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,9 +17,17 @@ class WagonSeeder extends Seeder
      */
     public function run(): void
     {
-        Wagon::factory()
-            ->count(150)
-            ->has(WagonPrice::factory())
-            ->create();
+        Train::all()->each(function (Train $train) {
+
+            $count = rand(5, 20);
+
+            collect(range(1, $count))->each(function ($num) use ($train) {
+                Wagon::factory()->create([
+                    'train_id' => $train->id,
+                    'number' => $num,
+                ]);
+            });
+
+        });
     }
 }
