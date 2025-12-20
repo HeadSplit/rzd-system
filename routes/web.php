@@ -20,3 +20,9 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/login', AuthController::class)->name('login');
 });
 
+
+Route::get('/search', [PageController::class, 'search'])->name('trains.search');
+Route::group(['middleware' => 'auth'], function () {
+
+});
+

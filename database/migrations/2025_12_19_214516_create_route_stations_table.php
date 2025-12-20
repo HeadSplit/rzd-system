@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedInteger('order')
                 ->comment('Позиция станции в маршруте');
 
-            $table->time('arrival_time')->nullable();
-            $table->time('departure_time')->nullable();
+            $table->dateTime('arrival_time')->nullable();
+            $table->dateTime('departure_time')->nullable();
 
             $table->timestamps();
         });

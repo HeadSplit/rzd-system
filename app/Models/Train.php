@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 class Train extends Model
 {
     use HasFactory;
 
-    public function routes(): BelongsTo
+    public function routes(): HasOne
     {
-        return $this->belongsTo(Route::class);
+        return $this->HasOne(Route::class);
     }
 
 }
