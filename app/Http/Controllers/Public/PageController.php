@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Route;
+use App\Models\RouteStation;
+use App\Models\Seat;
 use App\Models\Station;
+use App\Models\Train;
+use App\Models\Wagon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,5 +56,29 @@ class PageController extends Controller
             ->get();
 
         return view('pages.search', compact('routes', 'from', 'to', 'dateFrom'));
+    }
+
+    public function service(Route $route): View
+    {
+        $route->load('train.wagons.wagonprice');
+
+        return view('pages.service', compact('route'));
+    }
+
+    public function seats(Route $route, Wagon $wagon): View
+    {
+        $seats = Seat::where('wagon_id', $wagon->id)->get();
+
+        return view('pages.seats', compact('wagon', 'seats'));
+    }
+
+    public function passenger(Route $route, Wagon $wagon, array $seats): View
+    {
+
+    }
+
+    public function show(): View
+    {
+        return view('pages.show');
     }
 }

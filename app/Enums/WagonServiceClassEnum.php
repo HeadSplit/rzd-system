@@ -26,4 +26,18 @@ Enum WagonServiceClassEnum: string
             self::invalid => [3000, 6000],
         };
     }
+
+    public function label(): string
+    {
+        return match($this) {
+            self::basic => 'Обычный',
+            self::normal => 'Нормальный',
+            self::business => 'Бизнес',
+            self::firstClass => 'Первый класс',
+            self::suite => 'Люкс',
+            self::premium => 'Премиум',
+            self::meetingRoom => 'Конференц-зал',
+            self::invalid => 'Вагон маломобильных',
+        };
+    }
 }
