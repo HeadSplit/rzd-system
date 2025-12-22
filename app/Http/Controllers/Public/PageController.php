@@ -69,12 +69,21 @@ class PageController extends Controller
     {
         $seats = Seat::where('wagon_id', $wagon->id)->get();
 
-        return view('pages.seats', compact('wagon', 'seats'));
+        return view('pages.seats', compact('wagon', 'route', 'seats'));
     }
 
-    public function passenger(Route $route, Wagon $wagon, array $seats): View
+    public function passenger(Route $route, Wagon $wagon, Request $request): View
     {
+        $seatIds = collect(explode(',', $request->get('selected_seats', '')))
+            ->filter()
+            ->map(fn ($id) => (int) $id);
 
+        $seats = Seat::whereIn('id', $seatIds)
+            ->where('wagon_id', $wagon->id)
+            ->where('is_available', true)
+            ->get();
+
+        return view('pages.passenger', compact('route', 'wagon', 'seats'));
     }
 
     public function show(): View

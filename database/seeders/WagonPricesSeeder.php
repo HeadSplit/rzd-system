@@ -17,7 +17,7 @@ class WagonPricesSeeder extends Seeder
     {
         Wagon::all()->each(function (Wagon $wagon) {
             $serviceClass = $wagon->service_class;
-            $priceRange = WagonServiceClassEnum::tryFrom($serviceClass)->getBasePriceRange();
+            $priceRange = $serviceClass->getBasePriceRange();
 
             WagonPrice::factory()
                 ->for($wagon)

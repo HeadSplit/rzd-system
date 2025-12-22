@@ -35,7 +35,7 @@ class SeatSeeder extends Seeder
             }
 
             $capacity = $this->wagonFeaturesService
-                ->getWagonData(WagonServiceClassEnum::tryFrom($wagon->service_class))
+                ->getWagonData($wagon->service_class)
             ['capacity'];
 
             for ($i = 1; $i <= $capacity; $i++) {
