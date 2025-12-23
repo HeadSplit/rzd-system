@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('wagon_id')->references('id')->on('wagons')->onDelete('cascade');
             $table->decimal('min_price', 8, 2, false);
             $table->decimal('max_price', 8, 2, false);
+            $table->unique(['wagon_id']);
             $table->timestamps();
         });
     }

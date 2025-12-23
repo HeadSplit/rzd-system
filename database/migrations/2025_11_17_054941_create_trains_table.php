@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('trains', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('number')->unique();
+            $table->string('name')->unique();
             $table->foreignId('start_station_id')->nullable()->constrained('stations')->onDelete('cascade');
             $table->foreignId('end_station_id')->nullable()->constrained('stations')->onDelete('cascade');
+            $table->unique(['start_station_id', 'end_station_id']);
             $table->timestamps();
         });
     }

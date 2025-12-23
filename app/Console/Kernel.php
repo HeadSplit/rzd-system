@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('scan:xlsx')->everyMinute();
+        $schedule->command('seed:daily')->dailyAt('6:00');
     }
 
     /**

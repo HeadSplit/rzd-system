@@ -15,22 +15,30 @@ class WagonPricesSeeder extends Seeder
      */
     public function run(): void
     {
-        Wagon::all()->each(function (Wagon $wagon) {
-            $serviceClass = $wagon->service_class;
-            $priceRange = $serviceClass->getBasePriceRange();
+        Wagon::chunk(100, function ($wagons) {
+            $data = [];
 
-            WagonPrice::factory()
-                ->for($wagon)
-                ->state(function () use ($priceRange) {
-                    $minPrice = fake()->randomFloat(2, $priceRange[0], $priceRange[1]);
-                    $maxPrice = fake()->randomFloat(2, $minPrice, $priceRange[1] * 1.5);
+            foreach ($wagons as $wagon) {
+                $serviceClass = $wagon->service_class;
+                $priceRange = $serviceClass->getBasePriceRange();
 
-                    return [
-                        'min_price' => $minPrice,
-                        'max_price' => $maxPrice,
-                    ];
-                })
-                ->create();
+                $minPrice = mt_rand($priceRange[0] * 100, $priceRange[1] * 100) / 100;
+                $maxPrice = mt_rand($minPrice * 100, ($priceRange[1] * 1.5) * 100) / 100;
+
+                $data[] = [
+                    'wagon_id' => $wagon->id,
+                    'min_price' => $minPrice,
+                    'max_price' => $maxPrice,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            WagonPrice::upsert(
+                $data,
+                ['wagon_id'],
+                ['min_price', 'max_price', 'updated_at']
+            );
         });
     }
 }

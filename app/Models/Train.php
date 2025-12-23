@@ -13,6 +13,13 @@ class Train extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+      'name',
+      'number',
+      'start_station_id',
+      'end_station_id',
+    ];
+
     public function routes(): HasOne
     {
         return $this->HasOne(Route::class);

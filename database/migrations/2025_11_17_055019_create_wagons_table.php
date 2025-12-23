@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('description');
             $table->integer('seats_total');
             $table->enum('direction', ['left', 'right'])->default('left');
+            $table->unique(['train_id', 'number']);
             $table->timestamps();
         });
     }

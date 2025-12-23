@@ -2,6 +2,7 @@
 @section('content')
 
     <div class="flex justify-center mt-24 px-4">
+        @auth
         <form action="{{ route('trains.search') }}" method="GET" class="w-full max-w-6xl">
             <div class="bg-white rounded-xl shadow-lg p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
 
@@ -73,8 +74,15 @@
 
             </div>
         </form>
+        @endauth
     </div>
-
+    @guest
+        <div class="fixed inset-0 flex items-center justify-center">
+            <h1 class="text-4xl font-semibold text-gray-700 text-center">
+                Авторизуйтесь, прежде чем продолжить
+            </h1>
+        </div>
+    @endguest
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 

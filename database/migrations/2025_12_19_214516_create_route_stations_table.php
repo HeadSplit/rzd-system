@@ -27,6 +27,7 @@ return new class extends Migration
             $table->dateTime('arrival_time')->nullable();
             $table->dateTime('departure_time')->nullable();
 
+            $table->unique(['route_id', 'station_id']);
             $table->timestamps();
         });
     }

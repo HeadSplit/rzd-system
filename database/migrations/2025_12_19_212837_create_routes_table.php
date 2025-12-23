@@ -17,6 +17,7 @@ return new class extends Migration
                 ->constrained('trains')
                 ->cascadeOnDelete();
             $table->string('name')->nullable();
+            $table->unique(['train_id', 'name']);
             $table->timestamps();
         });
     }

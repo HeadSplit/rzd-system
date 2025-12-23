@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('type', array_column(SeatTypeEnum::cases(), 'value'))->default('default');
             $table->boolean('is_available')->default(true);
             $table->decimal('price', 8, 2, false);
+            $table->unique(['wagon_id', 'number']);
             $table->timestamps();
         });
     }
