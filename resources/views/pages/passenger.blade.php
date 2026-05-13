@@ -1,3 +1,6 @@
-<div>
-    <!-- Very little is needed to make a happy life. - Marcus Aurelius -->
-</div>
+@extends('layout.index')
+@section('title', 'Укажите данные пассажиров')
+
+@section('content')
+    В разработке
+@endsection

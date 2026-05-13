@@ -48,7 +48,7 @@ class PageController extends Controller
                         ->where('rs_from.station_id', $from)
                         ->whereColumn('rs_from.order', '<', 'rs_to.order')
                         ->when($date, fn ($q) =>
-                        $q->whereDate('rs_from.departure_time', $date)
+                        $q->whereDate('rs_from.departure_time', '>=', $date)
                         );
                 });
             })

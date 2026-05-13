@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/', [PageController::class, 'index'])->name('home');
+
 
     Route::post('/login', AuthController::class)->name('login');
 });
 
 
-
+Route::get('/', [PageController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/search', [PageController::class, 'search'])->name('trains.search');
     Route::get('/show/{id}', [PageController::class, 'show'])->name('routes.show');

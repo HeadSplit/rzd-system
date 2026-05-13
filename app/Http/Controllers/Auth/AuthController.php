@@ -14,9 +14,9 @@ class AuthController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if(Auth::attempt(['login' => $request->login, 'password' => $request->login])) {
+        if(Auth::attempt(['login' => $request->login, 'password' => $request->password])) {
             Session::regenerate();
-            return redirect()->route('');
+            return back();
         }
         return back()->withErrors(['auth' => 'Неверный логин или пароль'])->withInput();
     }
