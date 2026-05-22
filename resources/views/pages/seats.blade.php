@@ -89,7 +89,7 @@
                     <div>
                         <div class="text-lg">Вагон {{ $wagon->number }}</div>
                         <div class="text-sm text-gray-500">
-                            {{ $wagon->service_class }} · {{ $wagon->type->label() }}
+                            {{ $wagon->service_class->label() }} · {{ $wagon->type->label() }}
                         </div>
                     </div>
 

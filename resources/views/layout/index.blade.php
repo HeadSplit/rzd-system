@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Главная')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <title>@yield('title', 'РЖД')</title>
 </head>
 <body class="bg-gray-100">
 

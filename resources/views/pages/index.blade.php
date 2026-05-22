@@ -1,4 +1,5 @@
 @extends('layout.index')
+@section('title', 'Главная')
 @section('content')
 
     <div class="flex justify-center mt-24 px-4">
