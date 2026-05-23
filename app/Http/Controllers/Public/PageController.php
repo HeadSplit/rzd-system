@@ -88,11 +88,11 @@ class PageController extends Controller
 
         $startStationName = $startStation?->name;
         $endStationName   = $endStation?->name;
-
         $seats = Seat::whereIn('id', $seatIds)
             ->where('wagon_id', $wagon->id)
             ->where('is_available', true)
             ->get();
+        $price = $seats->sum('price');
 
         return view('pages.passenger', compact(
             'route',
@@ -100,7 +100,8 @@ class PageController extends Controller
             'train',
             'seats',
             'startStationName',
-            'endStationName'
+            'endStationName',
+            'price'
         ));
     }
 

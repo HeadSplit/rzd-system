@@ -63,26 +63,24 @@
             {{-- Заголовок пассажира и цена --}}
             <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4 sm:mb-6">
                 <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Пассажир 1</h2>
-                <div class="text-xl sm:text-2xl font-bold text-gray-900">
-                    8 541<span class="text-sm sm:text-base font-normal">,00 ₽</span>
+                <div class="text-xl sm:text-2xl font-bold text-gray-900">{{$price}}<span class="text-sm sm:text-base font-normal">₽</span>
                 </div>
             </div>
 
             {{-- Информация о месте --}}
             <div class="mb-4 sm:mb-6 space-y-1">
                 <p class="text-sm sm:text-base text-gray-900">
-                    Вагон {{$wagon->number}} {{$wagon->service_class->label()}} Место @foreach($seats as $seat)
-                    {{$seat->number}}
-                    @endforeach</p>
-                <p class="text-sm sm:text-base text-gray-900">Купе 2Ф, ТВЕРСК, Верхнее</p>
+                    Вагон {{$wagon->number}} {{$wagon->service_class->label()}} Место {{ $seats->pluck('number')->implode(', ') }}</p>
+                <p class="text-sm sm:text-base text-gray-900">{{$wagon->service_class->label()}} {{$wagon->number}},
+                    {{$startStationName}}, {{$wagon->service_class->label()}}</p>
             </div>
 
             {{-- Кнопка "Ввести данные" и описание --}}
             <div class="flex flex-col sm:flex-row items-stretch sm:items-start gap-4 sm:gap-6">
-                <form action="#" {{-- route('passenger.create') --}} method="GET" class="flex-shrink-0">
+                <form action="{{ route('pages.passport') }}"  method="GET" class="flex-shrink-0">
                     <button type="submit"
                             class="w-full sm:w-auto border border-gray-400 hover:border-black text-gray-900 font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-md transition-colors tracking-wide text-xs sm:text-sm">
-                       <a href="{{route('pages.passport')}}">ВВЕСТИ ДАННЫЕ</a>
+                       ВВЕСТИ ДАННЫЕ
                     </button>
                 </form>
                 <p class="text-xs sm:text-sm text-gray-600 sm:pt-1">
@@ -97,7 +95,9 @@
         {{-- Нижняя часть с сообщением и кнопкой --}}
         <div class="p-4 sm:p-6 lg:p-8">
             <p class="text-sm sm:text-base text-gray-900 mb-4 sm:mb-6">
-                Поездка Москва Октябрьская — Санкт-Петербург-Главный, поезд 022, Выберите класс обслуживания и место добавлена в корзину.
+                Поездка {{ $startStationName }} — {{ $endStationName }},
+                поезд {{ $train->name }},
+                выбранные места добавлены в корзину.
             </p>
 
             <div class="flex justify-center">

@@ -78,7 +78,7 @@
         @endauth
     </div>
     @guest
-        <div class="fixed inset-0 flex items-center justify-center">
+        <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0">
             <h1 class="text-4xl font-semibold text-gray-700 text-center">
                 Авторизуйтесь, прежде чем продолжить
             </h1>
@@ -91,39 +91,54 @@
         document.addEventListener('click', e => {
             const btn = document.getElementById('passengersBtn');
             const dropdown = document.getElementById('passengersDropdown');
+
             if (!btn || !dropdown) return;
-            if (btn.contains(e.target)) dropdown.classList.toggle('hidden');
-            else if (!dropdown.contains(e.target)) dropdown.classList.add('hidden');
+
+            if (btn.contains(e.target)) {
+                dropdown.classList.toggle('hidden');
+            } else if (!dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
         });
 
-        document.getElementById('swapStations').addEventListener('click', () => {
+        // swap stations
+        document.getElementById('swapStations')?.addEventListener('click', () => {
             const from = document.getElementById('fromStation');
             const to = document.getElementById('toStation');
+
+            if (!from || !to) return;
+
             const temp = from.value;
             from.value = to.value;
             to.value = temp;
         });
 
+        // counters
         const counters = document.querySelectorAll('.counter-btn');
         const passengersLabel = document.getElementById('passengersLabel');
+
         counters.forEach(btn => {
             btn.addEventListener('click', e => {
                 e.stopPropagation();
+
                 const span = btn.parentElement.querySelector('span');
                 let value = parseInt(span.textContent);
+
                 if (btn.textContent === '+') value++;
-                if (btn.textContent === '−') value = Math.max(0,value-1);
+                if (btn.textContent === '−') value = Math.max(0, value - 1);
+
                 span.textContent = value;
+
                 let total = 0;
-                document.querySelectorAll('#passengersDropdown span.w-6').forEach(s => total+=parseInt(s.textContent));
-                passengersLabel.textContent = total + (total===1?' пассажир':' пассажиров');
+                document.querySelectorAll('#passengersDropdown span.w-6')
+                    .forEach(s => total += parseInt(s.textContent));
+
+                passengersLabel.textContent = total + (total === 1 ? ' пассажир' : ' пассажиров');
             });
         });
 
-        flatpickr("#dateFrom", {dateFormat:"d.m.Y", minDate:"today", locale:"ru", onChange:(sd,dStr)=>{dateTo.set('minDate',dStr||"today");}});
-        const dateTo = flatpickr("#dateTo", {dateFormat:"d.m.Y", minDate:"today", locale:"ru"});
-
-        flatpickr("#dateFrom", {
+        // flatpickr
+        const dateFrom = flatpickr("#dateFrom", {
             dateFormat: "d.m.Y",
             minDate: "today",
             locale: "ru",
@@ -134,6 +149,12 @@
                     dateTo.set('minDate', "today");
                 }
             }
+        });
+
+        const dateTo = flatpickr("#dateTo", {
+            dateFormat: "d.m.Y",
+            minDate: "today",
+            locale: "ru"
         });
     </script>
 
