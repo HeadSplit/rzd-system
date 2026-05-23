@@ -19,7 +19,7 @@ class AuthController extends Controller
             Session::regenerate();
             return back();
         }
-        dd('not bug')
+        dd('not bug');
         return back()->withErrors(['auth' => 'Неверный логин или пароль'])->withInput();
     }
 }
