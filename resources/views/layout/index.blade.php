@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Главная')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>@yield('title', 'РЖД')</title>
 </head>
@@ -36,6 +35,9 @@
         </button>
         <span class="hidden sm:inline text-gray-500">|</span>
         <span class="text-xs sm:text-sm font-medium">RU</span>
+       @guest() <span class="text-xs sm:text-sm font-medium">
+    <button id="loginButtonDesktop" type="button">Войти</button>
+</span>@endguest
         <span class="hidden sm:inline text-gray-500">|</span>
         <button class="text-white hover:text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
