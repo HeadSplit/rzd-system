@@ -15,9 +15,11 @@ class AuthController extends Controller
     public function __invoke(Request $request)
     {
         if(Auth::attempt(['login' => $request->login, 'password' => $request->password])) {
+            dd('bug');
             Session::regenerate();
             return back();
         }
+        dd('not bug')
         return back()->withErrors(['auth' => 'Неверный логин или пароль'])->withInput();
     }
 }
