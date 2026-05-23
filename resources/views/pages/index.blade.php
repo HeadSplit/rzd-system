@@ -87,7 +87,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <script>
+    <!-- <script>
         document.addEventListener('click', e => {
             const btn = document.getElementById('passengersBtn');
             const dropdown = document.getElementById('passengersDropdown');
@@ -156,6 +156,6 @@
             minDate: "today",
             locale: "ru"
         });
-    </script>
+    </script> -->
 
 @endsection
