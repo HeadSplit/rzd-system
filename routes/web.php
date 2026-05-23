@@ -22,7 +22,7 @@ Route::group(['middleware' => 'guest'], function () {
 
 
 Route::get('/', [PageController::class, 'index'])->name('home');
-Route::group(['middleware' => 'auth'], function () {
+Route::group([], function () {
     Route::get('/search', [PageController::class, 'search'])->name('trains.search');
     Route::get('/show/{id}', [PageController::class, 'show'])->name('routes.show');
     Route::get('/route/{route}/service', [PageController::class, 'service'])->name('routes.service');
