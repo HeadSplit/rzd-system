@@ -28,5 +28,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/route/{route}/service', [PageController::class, 'service'])->name('routes.service');
     Route::get('/route/{route}/wagons/{wagon}/seats', [PageController::class, 'seats'])->name('routes.seats');
     Route::get('/route/{route}/wagons/{wagon}/passenger', [PageController::class, 'passenger'])->name('routes.passenger');
+    Route::get('/passport', [PageController::class, 'passport'])->name('pages.passport');
 });
 

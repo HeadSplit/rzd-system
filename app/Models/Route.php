@@ -21,7 +21,7 @@ class Route extends Model
     {
         return $this->belongsToMany(Station::class, 'route_stations')
             ->withPivot(['order','arrival_time','departure_time'])
-            ->orderBy('pivot_order');
+            ->orderByPivot('order');
     }
 
     public function wagons(): HasManyThrough

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Passanger;
 use App\Models\Route;
 use App\Models\RouteStation;
 use App\Models\Seat;
@@ -11,7 +12,9 @@ use App\Models\Train;
 use App\Models\Wagon;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class PageController extends Controller
@@ -52,7 +55,7 @@ class PageController extends Controller
                         );
                 });
             })
-            ->with(['stations' => fn ($q) => $q->orderBy('route_stations.order')])
+            ->with(['stations'])
             ->get();
 
         return view('pages.search', compact('routes', 'from', 'to', 'dateFrom'));
@@ -78,16 +81,42 @@ class PageController extends Controller
             ->filter()
             ->map(fn ($id) => (int) $id);
 
-        $train = Train::find(1);
+        $train = $wagon->train;
+
+        $startStation = $route->stations->first();
+        $endStation   = $route->stations->last();
+
+        $startStationName = $startStation?->name;
+        $endStationName   = $endStation?->name;
 
         $seats = Seat::whereIn('id', $seatIds)
             ->where('wagon_id', $wagon->id)
             ->where('is_available', true)
             ->get();
 
-        return view('pages.passenger', compact('route', 'wagon', 'seats', 'train'));
+        return view('pages.passenger', compact(
+            'route',
+            'wagon',
+            'train',
+            'seats',
+            'startStationName',
+            'endStationName'
+        ));
     }
 
+    public function passport()
+    {
+      //  Passanger::where('user_id', Auth::user()->id)->get();
+        return view('pages.passport');
+    }
+
+    public function uploadPassport(Request $request)
+    {
+        $data = $request->all();
+
+        Passanger::create($data);
+        return redirect()->route('passport');
+    }
     public function show(): View
     {
         return view('pages.show');
