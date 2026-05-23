@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="flex justify-center mt-24 px-4">
-        <!-- @auth -->
+        @guest
         <form action="{{ route('trains.search') }}" method="GET" class="w-full max-w-6xl">
             <div class="bg-white rounded-xl shadow-lg p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
 
@@ -75,7 +75,7 @@
 
             </div>
         </form>
-        <!-- @endauth -->
+        @endguest
     </div>
     <!-- @guest
         <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -87,7 +87,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <!-- <script>
+    <script>
         document.addEventListener('click', e => {
             const btn = document.getElementById('passengersBtn');
             const dropdown = document.getElementById('passengersDropdown');
@@ -156,6 +156,6 @@
             minDate: "today",
             locale: "ru"
         });
-    </script> -->
+    </script>
 
 @endsection
