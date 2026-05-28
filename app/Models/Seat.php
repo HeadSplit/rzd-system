@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Seat extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'number'
+    ];
 
     public function wagonprice(): HasOne
     {

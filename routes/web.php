@@ -22,11 +22,12 @@ Route::group(['middleware' => 'guest'], function () {
 
 
 Route::get('/', [PageController::class, 'index'])->name('home');
-Route::group(['middleware' => 'auth'], function () {
+Route::group([], function () {
     Route::get('/search', [PageController::class, 'search'])->name('trains.search');
     Route::get('/show/{id}', [PageController::class, 'show'])->name('routes.show');
     Route::get('/route/{route}/service', [PageController::class, 'service'])->name('routes.service');
     Route::get('/route/{route}/wagons/{wagon}/seats', [PageController::class, 'seats'])->name('routes.seats');
     Route::get('/route/{route}/wagons/{wagon}/passenger', [PageController::class, 'passenger'])->name('routes.passenger');
+    Route::get('/passport', [PageController::class, 'passport'])->name('pages.passport');
 });
 
