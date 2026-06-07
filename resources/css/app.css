@@ -25,3 +25,7 @@
 .counter-btn:hover {
     background: #f3f4f6;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
