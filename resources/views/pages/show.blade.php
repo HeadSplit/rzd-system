@@ -15,13 +15,14 @@
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
 {{-- Верхний хедер --}}
-<header class="bg-black text-white h-14 flex items-center justify-between px-3 sm:px-6">
+<header class="bg-gray-900 text-white h-14 flex items-center justify-between px-3 sm:px-6">
     {{-- Логотип РЖД --}}
     <div class="flex items-center">
         <svg class="h-7 w-10 sm:h-8 sm:w-12" viewBox="0 0 60 30" fill="none">
             <text x="0" y="24" fill="white" font-size="22" font-weight="bold">РЖД</text>
         </svg>
     </div>
+
     {{-- Правая часть хедера --}}
     <div class="flex items-center space-x-3 sm:space-x-6">
         {{-- Иконка очков - скрыта на мобилке --}}
@@ -34,15 +35,18 @@
                 <path d="M23 12h-3"/>
             </svg>
         </button>
+
         <button class="text-white hover:text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
             </svg>
         </button>
+
         <span class="hidden sm:inline text-gray-500">|</span>
         <span class="text-xs sm:text-sm font-medium">RU</span>
         <span class="hidden sm:inline text-gray-500">|</span>
+
         <button class="text-white hover:text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path d="M4 6h16M4 12h16M4 18h16"/>
@@ -68,9 +72,9 @@
             <div class="flex items-center gap-1 sm:gap-2 overflow-x-auto">
                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">1</div>
                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">2</div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">3</div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 text-gray-500 flex items-center justify-center text-xs font-semibold flex-shrink-0">4</div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 text-gray-500 flex items-center justify-center text-xs font-semibold flex-shrink-0">5</div>
+                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">3</div>
+                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">4</div>
+                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">5</div>
                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 text-gray-500 flex items-center justify-center text-xs font-semibold flex-shrink-0">6</div>
                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 text-gray-500 flex items-center justify-center text-xs font-semibold flex-shrink-0">7</div>
             </div>

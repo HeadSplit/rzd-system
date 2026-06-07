@@ -1,7 +1,7 @@
 @extends('layout.index')
 @section('content')
     <div class="bg-white border-b border-gray-200 px-3 sm:px-6 py-3 sm:py-4 flex items-center">
-        <a href="#" {{-- route('назад') --}} class="text-gray-700 hover:text-black mr-3 sm:mr-4 flex-shrink-0">
+        <a href="{{url()->previous()}}"  class="text-gray-700 hover:text-black mr-3 sm:mr-4 flex-shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
@@ -232,6 +232,31 @@
                         </div>
 
                         <input type="hidden" name="document_type" id="document_type" value="">
+                        <div id="doc-fields" class="hidden mt-4 flex flex-col sm:flex-row sm:items-end gap-3">
+
+                            {{-- Серия --}}
+                            <div class="relative">
+                                <input type="text" name="doc_series" id="doc_series"
+                                       class="peer w-32 border border-gray-300 rounded-md px-3 pt-4 pb-1.5 text-sm text-gray-900 placeholder-transparent focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                                       placeholder="Серия">
+                                <label for="doc_series"
+                                       class="absolute left-4 top-2 text-xs text-gray-500 transition-all">
+                                    Серия <span class="text-orange-500">*</span>
+                                </label>
+                            </div>
+
+                            {{-- Номер (скрыт до ввода серии) --}}
+                            <div class="relative hidden" id="doc-number-wrapper">
+                                <input type="text" name="doc_number" id="doc_number"
+                                       class="peer w-44 border border-gray-300 rounded-md px-3 pt-4 pb-1.5 text-sm text-gray-900 placeholder-transparent focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                                       placeholder="Номер">
+                                <label for="doc_number"
+                                       class="absolute left-4 top-2 text-xs text-gray-500 transition-all">
+                                    Номер <span class="text-orange-500">*</span>
+                                </label>
+                            </div>
+
+                        </div>
                     </div>
 
                     {{-- Кнопка добавить ещё документ --}}
@@ -257,6 +282,32 @@
     </div>
 
     <script>
+        const docFields = document.getElementById('doc-fields');
+        const seriesInput = document.getElementById('doc_series');
+        const numberWrapper = document.getElementById('doc-number-wrapper');
+        const numberInput = document.getElementById('doc_number');
+
+        // Показать поля при выборе документа
+        document.querySelectorAll('.doc-option').forEach(btn => {
+            btn.addEventListener('click', function () {
+                docFields.classList.remove('hidden');
+
+                // сброс
+                seriesInput.value = '';
+                numberInput.value = '';
+                numberWrapper.classList.add('hidden');
+            });
+        });
+
+        // Показ номера при вводе серии
+        seriesInput.addEventListener('input', function () {
+            if (this.value.trim().length > 0) {
+                numberWrapper.classList.remove('hidden');
+            } else {
+                numberWrapper.classList.add('hidden');
+                numberInput.value = '';
+            }
+        });
         // Переключение radio-кнопок пола
         document.querySelectorAll('input[name="gender"]').forEach(radio => {
             radio.addEventListener('change', function() {

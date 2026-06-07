@@ -17,16 +17,6 @@
     </div>
     {{-- Правая часть хедера --}}
     <div class="flex items-center space-x-3 sm:space-x-6">
-        {{-- Иконка очков - скрыта на мобилке --}}
-        <button class="hidden sm:block text-white hover:text-gray-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <circle cx="7" cy="12" r="3"/>
-                <circle cx="17" cy="12" r="3"/>
-                <path d="M10 12h4"/>
-                <path d="M4 12H1"/>
-                <path d="M23 12h-3"/>
-            </svg>
-        </button>
         <button class="text-white hover:text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>

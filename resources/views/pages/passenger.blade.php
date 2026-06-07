@@ -1,11 +1,4 @@
 @extends('layout.index')
-
-
-
-
-
-
-
 {{-- Основной контент --}}
 @section('content')
 <main class="flex-1 max-w-5xl mx-auto w-full px-3 sm:px-4 py-4 sm:py-8">
@@ -14,7 +7,7 @@
     <div class="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 lg:p-8 mb-4 sm:mb-6">
         {{-- Шаги --}}
         <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <a href="#" {{-- route('booking.previous') --}} class="text-gray-700 hover:text-black mr-1 sm:mr-2 flex-shrink-0">
+            <a href="{{url()->previous()}}"  class="text-gray-700 hover:text-black mr-1 sm:mr-2 flex-shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
@@ -24,9 +17,9 @@
             <div class="flex items-center gap-1 sm:gap-2 overflow-x-auto">
                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">1</div>
                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">2</div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">3</div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 text-gray-500 flex items-center justify-center text-xs font-semibold flex-shrink-0">4</div>
-                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 text-gray-500 flex items-center justify-center text-xs font-semibold flex-shrink-0">5</div>
+                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">3</div>
+                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-500 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">4</div>
+                <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">5</div>
                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 text-gray-500 flex items-center justify-center text-xs font-semibold flex-shrink-0">6</div>
                 <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 text-gray-500 flex items-center justify-center text-xs font-semibold flex-shrink-0">7</div>
             </div>

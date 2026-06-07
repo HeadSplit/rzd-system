@@ -22,7 +22,6 @@ class PageController extends Controller
     public function index(): View
     {
         $stations = Station::all();
-
         return view('pages.index', compact('stations'));
     }
 
