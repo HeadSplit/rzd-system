@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('passangers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('name');
             $table->string('surname');
             $table->string('patronymic');
             $table->boolean('has_patronymic')->default(false);
+            $table->date('birth_date');
             $table->string('document');
             $table->string('series');
             $table->string('number');

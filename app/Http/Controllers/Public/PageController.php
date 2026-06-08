@@ -27,6 +27,21 @@ class PageController extends Controller
 
     public function search(Request $request): View
     {
+        session([
+            'booking.search' => $request->only([
+                'from_station',
+                'to_station',
+                'date_from',
+                'date_to',
+                'passengers_count',
+                'adult_person',
+                'child_with_place',
+                'child_without_place',
+                'place_for_invalid',
+                'place_for_family',
+            ])
+        ]);
+
         $from = $request->get('from_station');
         $to = $request->get('to_station');
         $dateFrom = $request->get('date_from');
@@ -87,11 +102,23 @@ class PageController extends Controller
 
         $startStationName = $startStation?->name;
         $endStationName   = $endStation?->name;
+
         $seats = Seat::whereIn('id', $seatIds)
             ->where('wagon_id', $wagon->id)
             ->where('is_available', true)
             ->get();
+
         $price = $seats->sum('price');
+
+
+        $booking = session('booking', []);
+
+        $booking['route_id'] = $route->id;
+        $booking['wagon_id'] = $wagon->id;
+        $booking['seat_ids'] = $seats->pluck('id')->toArray();
+        $booking['price'] = $price;
+
+        session(['booking' => $booking]);
 
         return view('pages.passenger', compact(
             'route',

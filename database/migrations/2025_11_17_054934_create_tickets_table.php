@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('passanger_id')->constrained('passangers')->onDelete('cascade');
+
             $table->string('from');
             $table->datetime('from_date');
             $table->string('to');
