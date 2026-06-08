@@ -17,7 +17,6 @@ class LogoutController extends Controller
 
         $user->logout();
 
-        $request->session()->regenerate();
 
         return redirect('/');
     }

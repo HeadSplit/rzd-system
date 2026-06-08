@@ -16,7 +16,7 @@ class AuthController extends Controller
     {
         if(Auth::attempt(['login' => $request->login, 'password' => $request->password])) {
             Session::regenerate();
-            return back();
+            return redirect('/home');
         }
         return back()->withErrors(['auth' => 'Неверный логин или пароль'])->withInput();
     }

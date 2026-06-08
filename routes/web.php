@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['middleware' => 'guest'], function () {
 
-    Route::get('/', [PageController::class, 'index'])->name('home');
+
     Route::post('/login', AuthController::class)->name('login');
 });
-
+Route::get('/home', [PageController::class, 'index'])->name('home');
 
 
 Route::group([], function () {
