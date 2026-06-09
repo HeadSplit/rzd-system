@@ -309,10 +309,6 @@
                 </form>
             @if(!isset($passenger->id))
                 <div class="flex justify-stretch sm:justify-end mt-4">
-                    <button disabled
-                            class="flex-1 sm:flex-initial bg-gray-300 text-white font-medium px-8 py-3 rounded-md text-center cursor-not-allowed">
-                        Продолжить (сначала сохраните пассажира)
-                    </button>
                 </div>
             @endif
         </main>

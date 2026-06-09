@@ -143,4 +143,14 @@ class UserController extends Controller
             'number' => $passenger->number,
         ]);
     }
+
+    public function personal(): View
+    {
+        $passangers = Passanger::where('user_id', auth()->id())->get();
+        $tickets = Ticket::where('user_id', auth()->id())->get();
+
+        return view('user.personal', compact('passangers', 'tickets'));
+    }
+
+
 }

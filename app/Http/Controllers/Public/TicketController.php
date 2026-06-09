@@ -13,6 +13,7 @@ class TicketController extends Controller
 {
     public function store(Request $request)
     {
+
         $request->validate([
             'passanger_id' => 'required|exists:passangers,id',
         ]);
@@ -24,15 +25,13 @@ class TicketController extends Controller
         }
 
         $route = Route::findOrFail($booking['route_id']);
-
-
         $ticket = Ticket::create([
             'user_id' => auth()->id(),
             'passanger_id' => $request->passanger_id,
             'from' => $booking['search']['from_station'],
             'to' => $booking['search']['to_station'],
-            'from_date' => $route->stations()->pivot,
-            'to_date' => $route->arrival_time,
+            'from_date' => $booking['search']['date_from'],
+            'to_date' => $booking['search']['date_to'],
             'adult_person' => (int) $booking['search']['adult_person'],
             'child_with_place' => (int) $booking['search']['child_with_place'],
             'child_without_place' => (int) $booking['search']['child_without_place'],
@@ -48,8 +47,8 @@ class TicketController extends Controller
         Seat::whereIn('id', $booking['seat_ids'])
             ->update(['is_available' => false]);
 
-//        session()->forget('booking');
+       session()->forget('booking');
 
-        return redirect()->route('success');
+        return redirect()->route('home');
     }
 }

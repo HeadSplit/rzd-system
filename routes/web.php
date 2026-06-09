@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Private\AdminController;
 use App\Http\Controllers\Public\PageController;
 use App\Http\Controllers\Public\TicketController;
 use App\Http\Controllers\Public\UserController;
@@ -44,9 +45,23 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::post('/ticket/store', [TicketController::class, 'store'])->name('ticket.store');
+    Route::get('/ticket/{id}', [TicketController::class, 'show'])->name('ticket.show');
 
 
 
+    Route::get('/personal', [UserController::class, 'personal'])->name('users.personal');
     Route::post('/logout', AuthController::class)->name('logout');
+
+    Route::prefix('admin')
+        ->name('admin.')
+
+        ->group(function () {
+
+            Route::get('/', [AdminController::class, 'index'])->name('index');
+            Route::get('/tickets', [AdminController::class, 'tickets'])->name('tickets');
+            Route::get('/users', [AdminController::class, 'users'])->name('users');
+            Route::get('/passangers', [AdminController::class, 'passangers'])->name('passangers');
+            Route::get('/analytics', [AdminController::class, 'analytics'])->name('analytics');
+        });
 });
 

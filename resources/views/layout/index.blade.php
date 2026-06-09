@@ -14,14 +14,17 @@
         <svg class="h-7 w-10 sm:h-8 sm:w-12" viewBox="0 0 60 30" fill="none">
             <text x="0" y="24" fill="white" font-size="22" font-weight="bold"><a href="{{route('home')}}">РЖД</a></text>
         </svg>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </div>
     {{-- Правая часть хедера --}}
     <div class="flex items-center space-x-3 sm:space-x-6">
         <button class="text-white hover:text-gray-300">
+            <a href="{{route('users.personal')}}">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
             </svg>
+            </a>
         </button>
         <span class="hidden sm:inline text-gray-500">|</span>
         <span class="text-xs sm:text-sm font-medium">RU</span>
@@ -30,6 +33,17 @@
     <button id="loginButtonDesktop" type="button">Войти</button>
         </span>
         @endguest
+        @auth
+            <div class="flex items-center gap-4">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <span class="text-xs sm:text-sm font-medium">
+    <button id="logoutButton" type="button">Выйти</button>
+        </span>
+                </form>
+
+            </div>
+        @endauth
         <span class="hidden sm:inline text-gray-500">|</span>
         <button class="text-white hover:text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

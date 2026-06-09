@@ -30,6 +30,6 @@ class Ticket extends Model
 
     public function seats():BelongsToMany
     {
-        return $this->belongsToMany(Seat::class);
+        return $this->belongsToMany(Seat::class, 'ticket_seat');
     }
 }

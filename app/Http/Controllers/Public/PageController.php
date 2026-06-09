@@ -41,14 +41,10 @@ class PageController extends Controller
                 'place_for_family',
             ])
         ]);
-
         $from = $request->get('from_station');
         $to = $request->get('to_station');
-        $dateFrom = $request->get('date_from');
+        $date = $request->get('date_from');
 
-        $date = $dateFrom
-            ? Carbon::createFromFormat('d.m.Y', $dateFrom)->toDateString()
-            : null;
 
         $routes = Route::query()
             ->when($from && $to, function ($q) use ($from, $to, $date) {
@@ -72,7 +68,7 @@ class PageController extends Controller
             ->with(['stations'])
             ->get();
 
-        return view('pages.search', compact('routes', 'from', 'to', 'dateFrom'));
+        return view('pages.search', compact('routes', 'from', 'to', 'date'));
     }
 
     public function service(Route $route): View
