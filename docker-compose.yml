@@ -33,6 +33,10 @@ services:
         image: postgres:14
         container_name: postgres
         restart: always
+        command: >
+            postgres
+            -c hba_file=/etc/postgresql/pg_hba.conf
+
         environment:
             POSTGRES_DB: rzd-system
             POSTGRES_USER: admin
@@ -41,6 +45,7 @@ services:
             -   "5432:5432"
         volumes:
             -   pgdata:/var/lib/postgresql/data
+            - ./docker/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
         networks:
             - laravel
     pgadmin:
