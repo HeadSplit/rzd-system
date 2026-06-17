@@ -32,15 +32,21 @@
         <span class="text-xs sm:text-sm font-medium">
     <button id="loginButtonDesktop" type="button">Войти</button>
         </span>
+            <a href="{{route('admin.login')}}">
+                <span class="text-xs sm:text-sm font-medium">Администратор</span>
+            </a>
         @endguest
         @auth
+            @can('admin')
+            <a href="{{route('admin.index')}}">
+            <span class="text-xs sm:text-sm font-medium">Админ панель</span>
+            </a>
+            @endcan
+
             <div class="flex items-center gap-4">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <span class="text-xs sm:text-sm font-medium">
-    <button id="logoutButton" type="button">Выйти</button>
-        </span>
-                </form>
+                <a href="{{route('logout')}}">
+                    <span class="text-xs sm:text-sm font-medium">Выйти</span>
+                </a>
 
             </div>
         @endauth

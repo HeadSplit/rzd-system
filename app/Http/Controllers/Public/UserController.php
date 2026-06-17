@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Models\Passanger;
+use App\Models\Station;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -147,10 +148,12 @@ class UserController extends Controller
     public function personal(): View
     {
         $passangers = Passanger::where('user_id', auth()->id())->get();
-        $tickets = Ticket::where('user_id', auth()->id())->get();
+
+        $tickets = Ticket::with(['fromStation', 'toStation'])
+            ->where('user_id', auth()->id())
+            ->get();
 
         return view('user.personal', compact('passangers', 'tickets'));
     }
-
 
 }

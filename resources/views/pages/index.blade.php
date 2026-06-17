@@ -40,9 +40,9 @@
                             <div class="space-y-3">
                                 <label class="text-sm font-semibold text-gray-600">Дата поездки</label>
                                 <input name="date_from" type="date"
-                                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500">
+                                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500" required>
                                 <input name="date_to" type="date"
-                                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500">
+                                       class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-red-500" required>
                             </div>
                             <div class="space-y-3">
                                 <label class="text-sm font-semibold text-gray-600">Пассажиры</label>

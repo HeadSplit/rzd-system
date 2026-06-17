@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             WagonPricesSeeder::class,
             SeatSeeder::class,
             RouteStationSeeder::class,
+            AdminSeeder::class,
+            UserSeader::class,
         ]);
     }
 }

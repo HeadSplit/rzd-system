@@ -36,7 +36,7 @@
                 </div>
 
             </div>
-
+            @auth
             <div class="flex items-center gap-4">
 
                 <span class="text-sm text-slate-300">
@@ -48,7 +48,7 @@
                 </div>
 
             </div>
-
+            @endauth
         </div>
 
     </header>
@@ -61,7 +61,7 @@
             <div class="p-6">
 
                 <nav class="space-y-2">
-
+                    @can('admin')
                     <a href="{{ route('admin.tickets') }}"
                        class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-900 transition">
                         🚆
@@ -80,12 +80,22 @@
                         Пассажиры
                     </a>
 
+                        <a href="{{ route('admin.groups') }}"
+                           class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-900 transition">
+                            Группы
+                        </a>
+
                     <a href="{{ route('admin.analytics') }}"
                        class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-900 transition">
                         📊
                         Аналитика
                     </a>
 
+                        <a href="{{ route('home') }}"
+                           class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-900 transition">
+                           Выход
+                        </a>
+                    @endcan
                 </nav>
 
             </div>

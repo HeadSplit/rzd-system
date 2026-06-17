@@ -8,6 +8,7 @@ use App\Models\Seat;
 use App\Models\Station;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TicketController extends Controller
 {
@@ -49,6 +50,15 @@ class TicketController extends Controller
 
        session()->forget('booking');
 
-        return redirect()->route('home');
+        return redirect()->route('users.personal');
+    }
+
+    public function show(Ticket $ticket): View
+    {
+        abort_if($ticket->user_id !== auth()->user()->id, 403);
+
+        $ticket->load(['fromStation', 'toStation']);
+
+        return view('ticket.show', compact('ticket'));
     }
 }

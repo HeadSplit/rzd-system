@@ -91,7 +91,7 @@
                                 </span>
 
                                     <div class="font-medium">
-                                        {{ $passanger->birth_date }}
+                                        {{ $passanger->birth_date_formatted }}
                                     </div>
                                 </div>
 
@@ -101,7 +101,7 @@
                                 </span>
 
                                     <div class="font-medium">
-                                        {{ $passanger->document }}
+                                        {{ $passanger->document_type_label }}
                                     </div>
                                 </div>
 
@@ -122,7 +122,7 @@
                                 </span>
 
                                     <div class="font-medium">
-                                        {{ $passanger->gender }}
+                                        {{ $passanger->gender_label }}
                                     </div>
                                 </div>
 
@@ -133,7 +133,16 @@
                     @endforeach
 
                 </div>
+                <div class="bg-black px-6 py-4 flex items-center justify-between">
+                    <h2 class="text-white text-lg font-semibold">
+                        Данные пассажира
+                    </h2>
 
+                    <a href="{{ route('pages.passport') }}"
+                       class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-sm transition">
+                        Управление пассажирами
+                    </a>
+                </div>
             </div>
 
             {{-- Билеты --}}
@@ -161,7 +170,7 @@
 
                                             <div>
                                                 <div class="text-2xl font-bold">
-                                                    {{ $ticket->from }}
+                                                    {{ $ticket->fromStation->name }}
                                                 </div>
 
                                                 <div class="text-sm text-gray-500">
@@ -175,7 +184,7 @@
 
                                             <div>
                                                 <div class="text-2xl font-bold">
-                                                    {{ $ticket->to }}
+                                                    {{ $ticket->toStation->name }}
                                                 </div>
 
                                                 <div class="text-sm text-gray-500">
@@ -184,7 +193,7 @@
                                             </div>
 
                                         </div>
-
+1
                                         <div>
                                         <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium">
                                             Активный билет
@@ -230,7 +239,12 @@
                                     </div>
 
                                 </div>
-
+                                <div class="p-5 border-t">
+                                    <a href="{{ route('ticket.show', $ticket) }}"
+                                       class="inline-block bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl transition">
+                                        Подробнее
+                                    </a>
+                                </div>
                             </div>
 
                         @empty
