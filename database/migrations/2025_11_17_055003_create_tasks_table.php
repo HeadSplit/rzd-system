@@ -13,12 +13,24 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->foreignId('user_id')
+                ->unique()
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignId('ticket_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
             $table->text('description');
-            $table->jsonb('user_answers')->nullable();
+
             $table->jsonb('correct_answers');
-            $table->boolean('is_answers_correct')->nullable();
+            $table->jsonb('user_answers')->nullable();
+
+            $table->enum('status', ['pending', 'passed', 'failed'])->default('pending');
+
             $table->timestamps();
         });
     }

@@ -85,7 +85,7 @@
                             Группы
                         </a>
 
-                    <a href="{{ route('admin.analytics') }}"
+                    <a href="{{ route('admin.results') }}"
                        class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-900 transition">
                         📊
                         Аналитика
@@ -102,7 +102,7 @@
 
             <div class="absolute bottom-6 left-6 right-6">
 
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="get" action="{{ route('logout') }}">
                     @csrf
 
                     <button

@@ -8,6 +8,7 @@ use App\Http\Controllers\Public\TicketController;
 use App\Http\Controllers\Public\UserController;
 use App\Http\Controllers\PassangerController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +59,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/personal', [UserController::class, 'personal'])->name('users.personal');
     Route::get('/logout', LogoutController::class)->name('logout');
 
+    Route::get('/mytask', [TaskController::class, 'mytask'])->name('user.task');
+
 
 
     Route::prefix('admin')
@@ -92,6 +95,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/admin/passangers', [PassangerController::class, 'passangers'])->name('passangers');
             Route::get('/admin/passangers/{id}', [PassangerController::class, 'showPassanger'])->name('passangers.show');
             Route::delete('/admin/passangers/{id}', [PassangerController::class, 'deletePassanger'])->name('passangers.delete');
+
+            Route::get('/admin/results', [AdminController::class, 'results'])->name('results');
         });
 });
 

@@ -27,6 +27,7 @@ class Ticket extends Model
         'pets',
         'car',
         'motorcycle',
+        'wagon_id'
     ];
 
     protected $casts = [
@@ -47,6 +48,11 @@ class Ticket extends Model
     public function passanger(): BelongsTo
     {
         return $this->belongsTo(Passanger::class);
+    }
+
+    public function wagon(): BelongsTo
+    {
+        return $this->belongsTo(Wagon::class);
     }
     public function fromStation()
     {

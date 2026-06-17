@@ -99,11 +99,10 @@ class AdminController extends Controller
             'password' => ['required'],
         ]);
 
-        if($data['login'] == 'admin' && $data['password'] == 'admin123'){
-            $user = Auth::user();
-
-            return redirect()->route('admin.index');
-        }
+       if(Auth::attempt(['login' => $data['login'], 'password' => $data['password']])) {
+           $request->session()->regenerate();
+           return redirect()->route('admin.index');
+       }
         return back()->withErrors(['Неверный логин или пароль']);
     }
 
@@ -141,4 +140,19 @@ class AdminController extends Controller
 
         return redirect()->route('admin.tickets')->with('success', 'Билет удалён');
     }
+
+    public function results(Request $request)
+    {
+        $groupId = $request->get('group_id');
+
+        $users = User::with(['task', 'group'])
+            ->when($groupId, fn($q) => $q->where('group_id', $groupId))
+            ->get();
+
+        $groups = \App\Models\Group::all();
+
+        return view('admin.results', compact('users', 'groups', 'groupId'));
+    }
+
+
 }

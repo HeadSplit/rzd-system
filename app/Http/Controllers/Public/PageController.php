@@ -8,6 +8,7 @@ use App\Models\Route;
 use App\Models\RouteStation;
 use App\Models\Seat;
 use App\Models\Station;
+use App\Models\Task;
 use App\Models\Train;
 use App\Models\Wagon;
 use Carbon\Carbon;
@@ -22,6 +23,7 @@ class PageController extends Controller
     public function index(): View
     {
         $stations = Station::all();
+        $task = Task::where('user_id', Auth::id())->first();
         return view('pages.index', compact('stations'));
     }
 
@@ -81,6 +83,10 @@ class PageController extends Controller
     public function seats(Route $route, Wagon $wagon): View
     {
         $seats = Seat::where('wagon_id', $wagon->id)->get();
+
+        session([
+            'booking.wagon_id' => $wagon->id,
+        ]);
 
         return view('pages.seats', compact('wagon', 'route', 'seats'));
     }

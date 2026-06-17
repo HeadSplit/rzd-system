@@ -105,7 +105,99 @@
         </form>
     </div>
 </div>
+@php
+    $task = auth()->user()?->task;
+@endphp
 
+@if($task)
+    <div id="task-widget"
+         class="fixed bottom-6 right-6 w-96 bg-black/80 border border-red-900/40 rounded-2xl p-5 shadow-2xl backdrop-blur-xl z-50">
+
+        <div id="task-header" class="flex items-start justify-between mb-3 cursor-move">
+            <p class="text-xs text-red-400 uppercase tracking-widest">
+                Задача
+            </p>
+
+            <a href="{{ route('user.task') }}"
+               class="text-xs text-slate-400 hover:text-white transition cursor-pointer">
+                подробнее →
+            </a>
+        </div>
+
+        <p class="text-sm text-slate-300 mb-4 line-clamp-4">
+            {{ $task->description }}
+        </p>
+
+        <div class="flex items-center justify-between text-xs">
+            @if($task->status === 'pending')
+                <span class="text-slate-400">⏳ Не выполнена</span>
+            @elseif($task->status === 'passed')
+                <span class="text-green-400">✅ Выполнена</span>
+            @else
+                <span class="text-red-400">❌ Ошибка</span>
+            @endif
+        </div>
+
+    </div>
+
+    <script>
+        const widget = document.getElementById('task-widget');
+        const header = document.getElementById('task-header');
+
+        const STORAGE_KEY = 'task_widget_position';
+
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (saved) {
+            try {
+                const pos = JSON.parse(saved);
+
+                widget.style.left = pos.left + 'px';
+                widget.style.top = pos.top + 'px';
+                widget.style.bottom = 'auto';
+                widget.style.right = 'auto';
+            } catch (e) {}
+        }
+
+        header.addEventListener('mousedown', (e) => {
+            isDragging = true;
+
+            const rect = widget.getBoundingClientRect();
+
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+
+            widget.style.bottom = 'auto';
+            widget.style.right = 'auto';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const left = e.clientX - offsetX;
+            const top = e.clientY - offsetY;
+
+            widget.style.left = left + 'px';
+            widget.style.top = top + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+
+            isDragging = false;
+
+            const rect = widget.getBoundingClientRect();
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                left: rect.left,
+                top: rect.top
+            }));
+        });
+    </script>
+@endif
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const mobileMenuButton = document.getElementById('mobileMenuButton');
@@ -144,6 +236,5 @@
         @endif
     });
 </script>
-
 </body>
 </html>

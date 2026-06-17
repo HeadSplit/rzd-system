@@ -42,6 +42,11 @@ class Wagon extends Model
         return $this->belongsTo(Train::class);
     }
 
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
     public function getFeaturesAttribute($value)
     {
         return $value ? json_decode($value, true) : [];

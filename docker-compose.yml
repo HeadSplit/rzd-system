@@ -68,21 +68,6 @@ services:
             -   "6379:6379"
         networks:
             - laravel
-
-    mongo:
-        image: mongo:6.0
-        container_name: mongo
-        restart: always
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: root
-            MONGO_INITDB_DATABASE: mydb
-        ports:
-            - "27017:27017"
-        volumes:
-            - mongodata:/data/db
-        networks:
-            - laravel
     node:
         image: node:20-alpine
         container_name: laravel_node

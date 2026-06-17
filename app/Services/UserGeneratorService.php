@@ -7,12 +7,14 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Services\TaskGeneratorService;
 use Illuminate\Support\Str;
 
 class UserGeneratorService
 {
     public function createFromFio(string $fio, int $groupId): ?array
     {
+        file_put_contents(storage_path('debug.txt'), "CREATE USER\n", FILE_APPEND);
         if (User::where('fullname', $fio)->where('group_id', $groupId)->exists()) {
             Log::info("пользователь $fio уже есть в базе данных");
             return null;
@@ -27,6 +29,8 @@ class UserGeneratorService
             'password' => bcrypt($password),
             'group_id' => $groupId,
         ]);
+
+        $task = app(TaskGeneratorService::class)->generateFor($user);
 
         return [
             'user' => $user,

@@ -7,6 +7,7 @@ use App\Models\Route;
 use App\Models\Seat;
 use App\Models\Station;
 use App\Models\Ticket;
+use App\Services\TaskCheckerService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -41,9 +42,12 @@ class TicketController extends Controller
             'pets' => false,
             'car' => false,
             'motorcycle' => false,
+            'wagon_id' => $booking['wagon_id'],
         ]);
 
         $ticket->seats()->attach($booking['seat_ids']);
+
+        app(TaskCheckerService::class)->check($ticket);
 
         Seat::whereIn('id', $booking['seat_ids'])
             ->update(['is_available' => false]);
